@@ -1,0 +1,44 @@
+Enter receptor name: M2
+Enter loop start residue number: 150
+Enter loop end residue number: 175
+
+Generating loops file...
+Loops file generated.
+
+Does the receptor have a 3.25-45.50 disulfide bond (y/n)?: y
+Enter Cys 3.25 residue number: 86
+Enter Cys 45.50 residue number: 166
+Generating disulf.cst...
+disulf.cst generated.
+
+Enter .pdb filename: M2_ECL2.pdb
+Enter ligand abbreviation (3 letters): 0HK
+Enter conformers .sdf filename: 0HK_conformers.sdf
+Enter 9 frag filename: M2_9_frag.txt
+Enter 3 frag residue number: M2_3_frag.txt
+Centering ligands at (  50.848,    8.121,   63.207)
+Atom names contain duplications -- renaming all atoms.
+WARNING:  structure contains double bonds but no aromatic bonds
+  Aromatic bonds must be identified explicitly --
+  alternating single/double bonds (Kekule structure) won't cut it.
+  This warning does not apply to you if your molecule really isn't aromatic.
+Total naive charge -2.625, desired charge 1.000, offsetting all atoms by 0.076
+WARNING: fragment 1 has 48 total atoms including H; protein residues have 7 - 24 (DNA: 33)
+WARNING: fragment 1 has 26 non-H atoms; protein residues have 4 - 14 (DNA: 22)
+WARNING: fragment 1 has 6 rotatable bonds; protein residues have 0 - 4
+Average 48.0 atoms (26.0 non-H atoms) per fragment
+(Proteins average 15.5 atoms (7.8 non-H atoms) per residue)
+WARNING:  no root atom specified, using NBR atom instead.
+Wrote params file 0HK.params
+
+
+
+Ligand parameters generated.
+
+Generating kic_with_frags.flags...
+kic_with_frags.flags generated.
+
+Generating KICfragsub.sh...
+KICfragsub.sh generated.
+
+All job files created. Make sure to change the suffix in each kic_with_frags.flags file before job submissions.
