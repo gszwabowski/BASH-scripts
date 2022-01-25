@@ -1,7 +1,10 @@
 #!/bin/bash
-#Commentary by Greg Szwabowski 12/4/2020
+#Commentary by Greg Szwabowski 1/25/2022
 #This script is used to create files used for loop modeling in Rosetta. Use the command 'chmod u+x hm_filegen.bash' to
 #obtain ownership of the file and then use './hm_filegen.bash' to run the script.
+
+#As this script runs, it will ask for residue numbers and filenames. Residue numbers should be entered as integers,
+#filenames should be suffixed with their filetype (e.g. frags.txt)
 
 
 #loop parameters
@@ -45,14 +48,20 @@ fi
 
 #kic parameters
 read -p "$(tput setaf 5)Enter .pdb filename: $(tput sgr 0)" PDB
-read -p "$(tput setaf 5)Enter ligand abbreviation (3 letters): $(tput sgr 0)" LIG
-read -p "$(tput setaf 5)Enter conformers .sdf filename: $(tput sgr 0)" CONFORMERS
 read -p "$(tput setaf 5)Enter 9 frag filename: $(tput sgr 0)" FRAG9
-read -p "$(tput setaf 5)Enter 3 frag residue number: $(tput sgr 0)" FRAG3
+read -p "$(tput setaf 5)Enter 3 frag filename: $(tput sgr 0)" FRAG3
+read -p "$(tput setaf 5)Enter ligand filename: $(tput sgr 0)" LIGFILE
+read -p "$(tput setaf 5)Enter ligand abbreviation (3 letters): $(tput sgr 0)" LIG
 
 #.params generation
-/public/apps/rosetta/2017.29.59598/main/source/scripts/python/public/molfile_to_params.py -n $LIG -p $LIG --conformers-in-one-file $CONFORMERS
+read -p "$(tput setaf 5)Do you have a set of ligand conformers to use during parameter file generation (y/n)?: $(tput sgr 0)" ANSWER
+if [ "$ANSWER" != "${ANSWER#[Yy]}" ] ;then
+	read -p "$(tput setaf 5)Enter conformers .sdf filename: $(tput sgr 0)" CONFORMERS
+	/public/apps/rosetta/2017.29.59598/main/source/scripts/python/public/molfile_to_params.py -n $LIG -p $LIG --conformers-in-one-file $CONFORMERS
+else
+	/public/apps/rosetta/2017.29.59598/main/source/scripts/python/public/molfile_to_params.py -n $LIG -p $LIG $LIGFILE
 echo -e "\n\n\n$(tput setaf 2)Ligand parameters generated.\n$(tput sgr 0)"
+fi
 
 # kic_with_frags.flags Template
 echo -e "$(tput setaf 3)Generating kic_with_frags.flags...$(tput sgr 0)"
@@ -127,4 +136,14 @@ sed -i "s/-out:suffix _/-out:suffix _C/g" C/kic_with_frags.flags
 sed -i "s/-out:suffix _/-out:suffix _D/g" D/kic_with_frags.flags
 sed -i "s/-out:suffix _/-out:suffix _E/g" E/kic_with_frags.flags
 
-echo -e "$(tput setaf 2)All job files created. Make sure to change the suffix in each kic_with_frags.flags file before job submissions.$(tput sgr 0)"
+#jobname suffixes
+for D in *; do
+	if [ -d "${D}" ]; then
+		cd $D
+		newname=_loopmodel_$D
+		sed -i "s/_loopmodel/$newname/g" KICfragsub.sh
+		cd ..
+	fi
+done 
+
+echo -e "$(tput setaf 2)All job files created.$(tput sgr 0)"

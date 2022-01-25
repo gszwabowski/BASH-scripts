@@ -44,7 +44,7 @@ read -p "$(tput setaf 5)Enter .pdb filename: $(tput sgr 0)" PDB
 read -p "$(tput setaf 5)Enter ligand abbreviation (3 letters): $(tput sgr 0)" LIG
 read -p "$(tput setaf 5)Enter conformers .sdf filename: $(tput sgr 0)" CONFORMERS
 read -p "$(tput setaf 5)Enter 9 frag filename: $(tput sgr 0)" FRAG9
-read -p "$(tput setaf 5)Enter 3 frag residue number: $(tput sgr 0)" FRAG3
+read -p "$(tput setaf 5)Enter 3 frag filename: $(tput sgr 0)" FRAG3
 
 #.params generation
 /public/apps/rosetta/2017.29.59598/main/source/scripts/python/public/molfile_to_params.py -n $LIG -p $LIG --conformers-in-one-file $CONFORMERS
