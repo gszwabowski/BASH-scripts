@@ -1,10 +1,17 @@
 #!/bin/bash
-#Commentary by Greg Szwabowski 1/25/2022
+#Commentary by Greg Szwabowski 9/16/2022
 #This script is used to create files used for loop modeling in Rosetta. Use the command 'chmod u+x hm_filegen.bash' to
-#obtain ownership of the file and then use './hm_filegen.bash' to run the script.
+#obtain ownership of the file and then use './hm_filegen.bash' to run the script. When this script runs, 5 directories
+#will be created (A, B, C, D, E) that each contain job files to generate 50 loop models suffixed A, B, C, D, E (250 total).
 
-#As this script runs, it will ask for residue numbers and filenames. Residue numbers should be entered as integers,
-#filenames should be suffixed with their filetype (e.g. frags.txt)
+#As this script runs, it will ask for residue numbers and filenames. Residue numbers represent the loop start/end and
+#3.25/45.50 cysteine residues as they are numbered in your .pdb file and should be entered as integers. Filenames should
+#be suffixed with their filetype (e.g. frags.txt).
+
+#The following files should be in the directory this script is run in:
+#   * .pdb file containing receptor structure with template ligand in binding pocket
+#   * XXX_9_frag.txt and XXX_3_frag.txt fragment files saved from Robetta
+#   * .sdf file of the template ligand
 
 
 #loop parameters
